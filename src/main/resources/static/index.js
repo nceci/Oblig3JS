@@ -18,9 +18,9 @@ function formatMovies(movies){
 }
 function validation(){
     let errorCount = 0;
-    let validphone = $("#phonenb")[0].checkValidity();
-    let validemail = $("#email")[0].checkValidity();
-    let validnumber = $("#number")[0].checkValidity();
+    let validphone = document.getElementById("phonenb").checkValidity();
+    let validemail = document.getElementById("email").checkValidity();
+    let validnumber = document.getElementById("number").checkValidity();
     let chosenMovie = $("#chosenMovie").val();
     let inNumber = $("#number").val();
     let infirstname = $("#firstname").val();
@@ -70,4 +70,46 @@ function validation(){
         errorCount++
     }
     return errorCount > 0;
+}
+function regTicket(){
+    const ticket = {
+        movie : $("#chosenMovie").val(),
+        number : $("#number").val(),
+        firstname : $("#firstname").val(),
+        lastname : $("#lastname").val(),
+        phonenb : $("#phonenb").val(),
+        email : $("#email").val()
+    };
+    if (validation() === false){
+        tickets.push(ticket);
+        $.post("/saveTicket", ticket, function (){
+            getTicket();
+        });
+        $("#chosenMovie").val("")
+        $("#number").val("")
+        $("#firstname").val("")
+        $("#lastname").val("")
+        $("#phonenb").val("")
+        $("#email").val("")
+    }
+}
+function getTicket(){
+    $.get("/getTicket",function (data){
+        formatTicket(data);
+    })
+}
+function formatTicket(tickets){
+    let out = "<table class='table table-striped'><tr>" +
+        "<th>Film</th><th>Antall</th><th>Fornavn</th><th>Etternavn</th><th>Telefonnr</th><th>Epost</th></tr>"
+    for (const ticket of tickets){
+        out += "<tr><td>"+ticket.movie+"</td><td>"+ticket.number+"</td><td>"+ticket.firstname+"</td>" +
+            "<td>"+ticket.lastname+"</td><td>"+ticket.phonenb+"</td><td>"+ticket.email+"</td></tr>"
+    }
+    out += "</table>"
+    $("#allTickets").html(out);
+}
+function deleteTickets(){
+    $.get("/deleteTicket",function (){
+        getTicket();
+    })
 }
