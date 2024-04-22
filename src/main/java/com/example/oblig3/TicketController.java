@@ -23,5 +23,12 @@ public class TicketController {
      newMovie.add(new Movie("Ibelin"));
      return newMovie;
  }
-
+ @GetMapping("/getTicket")
+    public List<Ticket> ticket(){
+     return tickets;
+ }
+ @GetMapping("/deleteTicket")
+    public void deleteTicket(){
+     tickets.clear();
+ }
 }
