@@ -100,13 +100,21 @@ function getTicket(){
 }
 function formatTicket(tickets){
     let out = "<table class='table table-striped'><tr>" +
-        "<th>Film</th><th>Antall</th><th>Fornavn</th><th>Etternavn</th><th>Telefonnr</th><th>Epost</th></tr>"
+        "<th>Film</th><th>Antall</th><th>Fornavn</th><th>Etternavn</th><th>Telefonnr</th><th>Epost</th><th></th><th></th></tr>"
     for (const ticket of tickets){
         out += "<tr><td>"+ticket.movie+"</td><td>"+ticket.number+"</td><td>"+ticket.firstname+"</td>" +
-            "<td>"+ticket.lastname+"</td><td>"+ticket.phonenb+"</td><td>"+ticket.email+"</td></tr>"
+            "<td>"+ticket.lastname+"</td><td>"+ticket.phonenb+"</td><td>"+ticket.email+"</td>" +
+            "<td><a class='btn btn-primary' href='changes.html?id="+ticket.id+"'>Endre</a></td>"+
+            "<td><button class='btn btn-danger' onclick='deleteOne("+ticket.id+")'>Slett</button></td></tr>"
     }
     out += "</table>"
     $("#allTickets").html(out);
+}
+function deleteOne(id){
+    const url ="/deleteOne?id="+id;
+    $.get(url,function (){
+        getTicket();
+    })
 }
 function deleteTickets(){
     $.get("/deleteTicket",function (){

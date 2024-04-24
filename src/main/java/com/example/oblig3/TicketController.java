@@ -18,19 +18,19 @@ private TicketRepository rep;
      rep.saveTicket(inTicket);
  }
  @GetMapping("/getMovie")
-    public List<Movie> movies(){
-     List<Movie> newMovie = new ArrayList<>();
-     newMovie.add(new Movie("Back to Black"));
-     newMovie.add(new Movie("One life"));
-     newMovie.add(new Movie("Ibelin"));
-     return newMovie;
+    public List<Movie> movies() {
+     return rep.getMovie();
  }
  @GetMapping("/getTicket")
     public List<Ticket> ticket(){
-     return tickets;
+     return rep.getTicket();
  }
  @GetMapping("/deleteTicket")
     public void deleteTicket(){
-     tickets.clear();
+     rep.deleteTicket();
+ }
+ @GetMapping("/deleteOne")
+    public void deleteOne(int id){
+     rep.deleteOne(id);
  }
 }
