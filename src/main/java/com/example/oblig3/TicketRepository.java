@@ -23,9 +23,9 @@ public class TicketRepository {
         return db.query(sql, new BeanPropertyRowMapper(Ticket.class));
     }
     public Ticket getOneTicket(int id){
-        Object[] param = new Object[0];
+        Object[] param = new Object[1];
         param[0] = id;
-        String sql = "SELECT FROM Ticket WHERE id=?";
+        String sql = "SELECT * FROM Ticket WHERE id=?";
         Ticket oneTicket = db.queryForObject(sql,param,BeanPropertyRowMapper.newInstance(Ticket.class));
         return oneTicket;
     }
